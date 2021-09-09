@@ -19,10 +19,13 @@ class Fragment1 : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_1, container, false)
         // Inflate the layout for this fragment
         val mainText = view.findViewById<TextView>(R.id.mainText)
         var clickListener: Fragment1ClickListener? = null
+        arguments?.let {
+            mainText.text = it.getInt("openWithId").toString()
+        }
         mainText.text=arguments?.getInt("openWithId").toString()
         view.findViewById<Button>(R.id.button).apply {
             setOnClickListener { clickListener?.onClick() }
@@ -34,6 +37,7 @@ class Fragment1 : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         if (context is Fragment1ClickListener){
             clickListener = context
         }
